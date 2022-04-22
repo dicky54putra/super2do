@@ -1,8 +1,17 @@
-const Footer = () => {
+/**
+ *
+ * @param {object} param0
+ * @param {array} param0.rows
+ * @returns
+ */
+const Footer = ({ rows }) => {
+  const leftCount = rows.filter((prev) => {
+    return prev.isComplete === false;
+  });
   return (
     <footer className="footer">
       <span className="todo-count">
-        <strong>0</strong> item left
+        <strong>{leftCount.length}</strong> item left
       </span>
 
       <ul className="filters">

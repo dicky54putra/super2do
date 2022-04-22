@@ -15,7 +15,7 @@ const Home = () => {
     <section className="todoapp">
       <Headers title="Super2Do" setRows={setRows} />
       <MainSection rows={rows} setRows={setRows} />
-      <Footer />
+      <Footer rows={rows} />
     </section>
   );
 };
