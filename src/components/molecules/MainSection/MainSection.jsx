@@ -1,3 +1,4 @@
+import axios from "axios";
 import List from "./List";
 
 /**
@@ -15,32 +16,47 @@ const MainSection = ({ rows, setRows }) => {
   };
 
   const handleChecked = (id) => (e) => {
+    e.preventDefault();
     const newRows = rows.filter((prev) => {
       if (prev._id === id) {
         prev.isComplete = !prev.isComplete;
       }
       return prev;
     });
-    setRows(newRows);
+    axios
+      .post("checked", { _id: id })
+      .then((res) => {
+        res.status === 200 && setRows(newRows);
+      })
+      .catch((err) => console.log(err));
   };
 
-  const handleCheckeds = (e) => {
-    const isTrue = [];
+  const handleCheckeds = async (e) => {
+    let isTrue = [];
+    let data = [];
 
-    rows?.forEach((prev) => {
+    await rows?.forEach((prev) => {
       isTrue.push(prev.isComplete);
+      data.push({ [prev._id]: prev.isComplete });
     });
 
     const newRows = rows.filter((prev) => {
       if (isTrue.includes(false)) {
         prev.isComplete = true;
+        data.push({ [prev._id]: true });
       } else {
         prev.isComplete = false;
+        data.push({ [prev._id]: false });
       }
       return prev;
     });
 
-    setRows(newRows);
+    await axios
+      .post("checkeds", { data: data })
+      .then((res) => {
+        res.status === 200 && setRows(newRows);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

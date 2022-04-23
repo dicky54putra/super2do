@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import useForm from "src/hooks/useForm";
 
@@ -21,7 +22,13 @@ const Headers = ({ title, setRows }) => {
       label: payload.todo,
       isComplete: false,
     };
-    setRows((prev) => [...prev, data]);
+    axios
+      .post("/add", data)
+      .then((res) => {
+        setRows((prev) => [...prev, data]);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
     payload.todo = "";
   };
 
