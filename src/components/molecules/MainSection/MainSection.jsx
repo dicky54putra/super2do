@@ -75,6 +75,8 @@ const MainSection = ({ rows, setRows }) => {
               key={row._id}
               isComplete={row.isComplete}
               label={row.label}
+              _id={row._id}
+              setRows={setRows}
               handleRemove={handleRemove(row._id)}
               handleChecked={handleChecked(row._id)}
             />
